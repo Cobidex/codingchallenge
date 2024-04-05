@@ -4,6 +4,8 @@ import catchAsync from '../errors/catchAsync.js';
 const getMovies = catchAsync(async (req, res, next) => {
   const response = await axios.get(process.env.MOVIES_URL);
 
+  const { title } = req.query;
+
   if (!response) {
     return res
       .status(500)
@@ -11,6 +13,13 @@ const getMovies = catchAsync(async (req, res, next) => {
   }
 
   let { data } = response;
+
+  if (title) {
+    data = data.filter((movie) =>
+      movie.title.toLowerCase().includes(title.toLowerCase()),
+    );
+  }
+
   if (data.length === 0) {
     return res
       .status(404)

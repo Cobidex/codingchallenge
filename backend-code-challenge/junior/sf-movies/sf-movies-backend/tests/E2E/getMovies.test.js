@@ -42,6 +42,71 @@ describe('/GET movies', () => {
     expect(response.body.data[0].director).toBeUndefined();
   });
 
+  it('Returns expected data with querry parameter when third party API is available', async () => {
+    const mockData = {
+      data: [
+        {
+          title: 'love',
+          locations: 'mockLocation1',
+          release_year: 2000,
+          production_company: 'mockCompany',
+          distribution: 'mockDistribution',
+          director: 'mockDirector',
+        },
+        {
+          title: 'charge',
+          locations: 'mockLocation2',
+          release_year: 2000,
+          production_company: 'mockCompany',
+          distribution: 'mockDistribution',
+          director: 'mockDirector',
+        },
+        {
+          title: 'love',
+          locations: 'mockLocation3',
+          release_year: 2000,
+          production_company: 'mockCompany',
+          distribution: 'mockDistribution',
+          director: 'mockDirector',
+        },
+        {
+          title: 'charge',
+          locations: 'mockLocation4',
+          release_year: 2000,
+          production_company: 'mockCompany',
+          distribution: 'mockDistribution',
+          director: 'mockDirector',
+        },
+        {
+          title: 'charge',
+          locations: 'mockLocation5',
+          release_year: 2000,
+          production_company: 'mockCompany',
+          distribution: 'mockDistribution',
+          director: 'mockDirector',
+        },
+      ],
+    };
+
+    axios.get.mockResolvedValue(mockData);
+
+    const response = await request(app).get('/api/v1/movies?title=love');
+    console.log(response.body.data);
+    console.log(mockData.data);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.status).toBe('success');
+    expect(response.body.data.length).toBe(2);
+    expect(response.body.data[0].locations).toBe(mockData.data[0].locations);
+    expect(response.body.data[1].locations).toBe(mockData.data[2].locations);
+    expect(response.body.data[0].release_year).toBe(
+      mockData.data[0].release_year,
+    );
+    expect(response.body.data[0].production_company).toBeUndefined();
+    expect(response.body.data[0].distribution).toBeUndefined();
+    expect(response.body.data[0].director).toBeUndefined();
+  });
+
   it('Returns proper erro message when no data is available', async () => {
     const mockData = { data: [] };
 
