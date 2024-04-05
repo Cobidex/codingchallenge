@@ -6,11 +6,10 @@ const getMovies = catchAsync(async (req, res, next) => {
 
   const { title } = req.query;
 
-  if (!response) {
+  if (!response)
     return res
       .status(500)
       .json({ status: 'error', error: 'data source unavailable' });
-  }
 
   let { data } = response;
 
@@ -25,6 +24,12 @@ const getMovies = catchAsync(async (req, res, next) => {
       .status(404)
       .json({ status: 'error', error: 'no data available' });
   }
+
+  data = data.map((movie) => ({
+    title: movie.title,
+    locations: movie.locations,
+    release_year: movie.release_year,
+  }));
 
   return res.status(200).json({ status: 'success', data });
 });

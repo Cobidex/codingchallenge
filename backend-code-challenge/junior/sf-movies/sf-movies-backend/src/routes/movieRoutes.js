@@ -5,6 +5,6 @@ import getMovies from '../controllers/movieController.js';
 config();
 const movieRouter = express.Router();
 
-movieRouter.route('/movies').get(getMovies);
+movieRouter.route('/').get(getMovies);
 
 export default movieRouter;
