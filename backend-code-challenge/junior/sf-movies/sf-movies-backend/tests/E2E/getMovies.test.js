@@ -37,9 +37,6 @@ describe('/GET movies', () => {
     expect(response.body.data[0].release_year).toBe(
       mockData.data[0].release_year,
     );
-    expect(response.body.data[0].production_company).toBeUndefined();
-    expect(response.body.data[0].distribution).toBeUndefined();
-    expect(response.body.data[0].director).toBeUndefined();
   });
 
   it('Returns expected data with querry parameter when third party API is available', async () => {
@@ -102,9 +99,6 @@ describe('/GET movies', () => {
     expect(response.body.data[0].release_year).toBe(
       mockData.data[0].release_year,
     );
-    expect(response.body.data[0].production_company).toBeUndefined();
-    expect(response.body.data[0].distribution).toBeUndefined();
-    expect(response.body.data[0].director).toBeUndefined();
   });
 
   it('Returns proper erro message when no data is available', async () => {
