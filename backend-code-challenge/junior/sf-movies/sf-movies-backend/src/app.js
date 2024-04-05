@@ -1,5 +1,4 @@
 import express from 'express';
-import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -20,8 +19,6 @@ app.use(cors());
 app.set('trust proxy', 3);
 
 app.use(limiter);
-
-app.use(helmet.hidePoweredBy());
 
 app.use(morgan('tiny'));
 app.use(express.json());
