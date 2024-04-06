@@ -25,12 +25,6 @@ const getMovies = catchAsync(async (req, res, next) => {
       .json({ status: 'error', error: 'no data available' });
   }
 
-  data = data.map((movie) => ({
-    title: movie.title,
-    locations: movie.locations,
-    release_year: movie.release_year,
-  }));
-
   return res.status(200).json({ status: 'success', data });
 });
 
