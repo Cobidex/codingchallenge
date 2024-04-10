@@ -12,10 +12,13 @@ const {
 } = require('../../config');
 
 module.exports = (req, res, context) => {
-  const encodedSlug = req.headers[X_SLUG];
-  const decodedSlug = Buffer.from(encodedSlug, 'base64').toString('utf-8');
+  if (req.params.slug !== MYSELF) return context.continue;
 
-  if (decodedSlug !== MYSELF) return context(new BadRequestError());
+  if (req.params.slug === MYSELF) req.params.slug = 'senior-candidate';
 
-  return context.continue;
+  const encodedSlug = req.header(X_SLUG);
+
+  if (!encodedSlug) throw new BadRequestError('Missing user slug');
+
+  if (Buffer.from(encodedSlug, 'base64').toString('utf-8')) return context.continue;
 };

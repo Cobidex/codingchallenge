@@ -31,7 +31,7 @@ describe.skip('User Resource', () => {
   });
 
   describe('List Operation - GET /users', () => {
-    test('should return emptry array', async () => {
+    test('should return empty array', async () => {
       const res = await agent.get('/users');
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual([]);
