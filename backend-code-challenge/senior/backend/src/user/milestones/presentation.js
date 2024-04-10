@@ -18,7 +18,6 @@ module.exports = async (req, res, context) => {
   });
 
   const favItems = await Promise.all(asyncFns);
-  console.log(favItems);
 
   context.instance.dataValues.favouritesDetails = favItems.map((item) => item.data);
 
