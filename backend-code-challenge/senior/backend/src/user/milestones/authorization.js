@@ -12,7 +12,7 @@ const {
 } = require('../../config');
 
 module.exports = (req, res, context) => {
-  const apiKey = req.headers[X_API_KEY];
-  if (apiKey !== KEY) return context(new ForbiddenError());
+  const apiKey = req.header(X_API_KEY);
+  if (apiKey !== KEY) throw new ForbiddenError('Wrong API key');
   return context.continue;
 };
