@@ -12,7 +12,10 @@ const {
 } = require('../../config');
 
 module.exports = (req, res, context) => {
-  const slug = req.headers[X_SLUG];
-  if (slug !== MYSELF) return context(new BadRequestError());
+  const encodedSlug = req.headers[X_SLUG];
+  const decodedSlug = Buffer.from(encodedSlug, 'base64').toString('utf-8');
+
+  if (decodedSlug !== MYSELF) return context(new BadRequestError());
+
   return context.continue;
 };
