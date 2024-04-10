@@ -10,14 +10,17 @@ const {
 } = require('../../config');
 
 module.exports = async (req, res, context) => {
-  const { favourites } = req.body;
+  const { favourites } = context.instance.dataValues;
   const asyncFns = favourites.map((id) => {
-    const uri = `${BASE_URL}/${PEOPLE}/${id}/`;
-    return axios.get(uri);
+    const uri = `${BASE_URL}/${PEOPLE}/${id}`;
+    const response = axios.get(uri);
+    return response;
   });
 
   const favItems = await Promise.all(asyncFns);
-  res.favouritesDetails = favItems;
+  console.log(favItems);
+
+  context.instance.dataValues.favouritesDetails = favItems.map((item) => item.data);
 
   return context.continue;
 };
