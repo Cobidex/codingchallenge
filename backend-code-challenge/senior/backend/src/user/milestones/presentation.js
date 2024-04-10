@@ -11,13 +11,10 @@ const {
 
 module.exports = async (req, res, context) => {
   const { favourites } = req.body;
-  const asyncFns = favourites.map(
-    (id) =>
-      new Promise(() => {
-        const uri = `${BASE_URL}/${PEOPLE}/${id}/`;
-        return axios.get(uri);
-      }),
-  );
+  const asyncFns = favourites.map((id) => {
+    const uri = `${BASE_URL}/${PEOPLE}/${id}/`;
+    return axios.get(uri);
+  });
 
   const favItems = await Promise.all(asyncFns);
   res.favouritesDetails = favItems;
